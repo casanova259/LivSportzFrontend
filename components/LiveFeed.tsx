@@ -7,6 +7,7 @@ interface LiveFeedProps {
   messages: Commentary[];
   isActive: boolean;
   isLoading?: boolean;
+  matchId: number
 }
 
 const formatMinute = (minute?: number) => {
@@ -27,12 +28,14 @@ const formatMetadata = (metadata?: Record<string, unknown>) => {
   }
 };
 
-export const LiveFeed: React.FC<LiveFeedProps> = ({ messages, isActive, isLoading }) => {
+export const LiveFeed: React.FC<LiveFeedProps> = ({ messages, isActive, isLoading, matchId }) => {
 
   const [commentary, setCommentary] = useState([]);
 
   useEffect(() => {
 
+    if (!matchId) return;
+    
     async function loadData() {
 
       const response = await fetchMatchCommentary(matchId);
